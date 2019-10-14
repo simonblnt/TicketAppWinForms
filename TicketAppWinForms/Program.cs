@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TicketAppWinForms.View;
 
 namespace TicketAppWinForms
 {
@@ -16,7 +17,15 @@ namespace TicketAppWinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            Application.Run();
         }
     }
 }
+
+
+/*var main_form = new Form1();
+main_form.Show();
+Application.Run();
+*/
