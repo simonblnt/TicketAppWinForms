@@ -30,6 +30,10 @@ namespace TicketAppWinForms.View
 
         }
 
-
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.ShowDialog();
+        }
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.testMatchLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.userToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,18 +44,18 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainUser = new System.Windows.Forms.Label();
-            this.testMatchLabel = new System.Windows.Forms.Label();
-            this.panel2.SuspendLayout();
+            this.stadiumControl1 = new TicketAppWinForms.View.StadiumControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel2
+            // testMatchLabel
             // 
-            this.panel2.Controls.Add(this.testMatchLabel);
-            this.panel2.Location = new System.Drawing.Point(12, 27);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(776, 411);
-            this.panel2.TabIndex = 6;
+            this.testMatchLabel.AutoSize = true;
+            this.testMatchLabel.Location = new System.Drawing.Point(235, 9);
+            this.testMatchLabel.Name = "testMatchLabel";
+            this.testMatchLabel.Size = new System.Drawing.Size(35, 13);
+            this.testMatchLabel.TabIndex = 0;
+            this.testMatchLabel.Text = "label1";
             // 
             // menuStrip1
             // 
@@ -65,7 +65,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -157,37 +157,41 @@
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
             this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem1.Text = "About";
+            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
             // lblMainUser
             // 
-            this.lblMainUser.AutoSize = true;
-            this.lblMainUser.Location = new System.Drawing.Point(753, 9);
+            this.lblMainUser.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblMainUser.BackColor = System.Drawing.SystemColors.Window;
+            this.lblMainUser.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblMainUser.Location = new System.Drawing.Point(881, 9);
             this.lblMainUser.Name = "lblMainUser";
-            this.lblMainUser.Size = new System.Drawing.Size(35, 13);
+            this.lblMainUser.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lblMainUser.Size = new System.Drawing.Size(115, 13);
             this.lblMainUser.TabIndex = 9;
             this.lblMainUser.Text = "Guest";
             // 
-            // testMatchLabel
+            // stadiumControl1
             // 
-            this.testMatchLabel.AutoSize = true;
-            this.testMatchLabel.Location = new System.Drawing.Point(261, 140);
-            this.testMatchLabel.Name = "testMatchLabel";
-            this.testMatchLabel.Size = new System.Drawing.Size(35, 13);
-            this.testMatchLabel.TabIndex = 0;
-            this.testMatchLabel.Text = "label1";
+            this.stadiumControl1.Location = new System.Drawing.Point(13, 28);
+            this.stadiumControl1.Name = "stadiumControl1";
+            this.stadiumControl1.Size = new System.Drawing.Size(983, 648);
+            this.stadiumControl1.TabIndex = 10;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1008, 687);
+            this.Controls.Add(this.stadiumControl1);
+            this.Controls.Add(this.testMatchLabel);
             this.Controls.Add(this.lblMainUser);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.menuStrip1);
+            this.MinimumSize = new System.Drawing.Size(1024, 726);
             this.Name = "MainWindow";
             this.Text = "MainWindow";
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -196,7 +200,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem userToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageAccountToolStripMenuItem;
@@ -213,5 +216,6 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.Label lblMainUser;
         private System.Windows.Forms.Label testMatchLabel;
+        private StadiumControl stadiumControl1;
     }
 }

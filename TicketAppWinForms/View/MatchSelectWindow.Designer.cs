@@ -29,57 +29,71 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lbMatchSelectMatches = new System.Windows.Forms.ListBox();
+            this.matchSelectBtnOk = new System.Windows.Forms.Button();
+            this.matchSelectLblWelcome = new System.Windows.Forms.Label();
+            this.matchSelectLvMatches = new System.Windows.Forms.ListView();
+            this.HomeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.AwayColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.matchBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnMatchSelectOk = new System.Windows.Forms.Button();
-            this.lblMatchSelectWelcome = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // lbMatchSelectMatches
+            // matchSelectBtnOk
             // 
-            this.lbMatchSelectMatches.DataSource = this.matchBindingSource;
-            this.lbMatchSelectMatches.DisplayMember = "TeamHome";
-            this.lbMatchSelectMatches.FormattingEnabled = true;
-            this.lbMatchSelectMatches.Location = new System.Drawing.Point(12, 60);
-            this.lbMatchSelectMatches.MultiColumn = true;
-            this.lbMatchSelectMatches.Name = "lbMatchSelectMatches";
-            this.lbMatchSelectMatches.Size = new System.Drawing.Size(338, 95);
-            this.lbMatchSelectMatches.TabIndex = 2;
-            this.lbMatchSelectMatches.ValueMember = "TeamAway";
-            this.lbMatchSelectMatches.SelectedIndexChanged += new System.EventHandler(this.lbMatchSelectMatches_SelectedIndexChanged);
+            this.matchSelectBtnOk.Location = new System.Drawing.Point(357, 60);
+            this.matchSelectBtnOk.Name = "matchSelectBtnOk";
+            this.matchSelectBtnOk.Size = new System.Drawing.Size(75, 23);
+            this.matchSelectBtnOk.TabIndex = 3;
+            this.matchSelectBtnOk.Text = "Select";
+            this.matchSelectBtnOk.UseVisualStyleBackColor = true;
+            this.matchSelectBtnOk.Click += new System.EventHandler(this.BtnMatchSelectOk_Click);
+            // 
+            // matchSelectLblWelcome
+            // 
+            this.matchSelectLblWelcome.AutoSize = true;
+            this.matchSelectLblWelcome.Location = new System.Drawing.Point(12, 23);
+            this.matchSelectLblWelcome.Name = "matchSelectLblWelcome";
+            this.matchSelectLblWelcome.Size = new System.Drawing.Size(86, 13);
+            this.matchSelectLblWelcome.TabIndex = 5;
+            this.matchSelectLblWelcome.Text = "Welcome Guest!";
+            // 
+            // matchSelectLvMatches
+            // 
+            this.matchSelectLvMatches.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.HomeColumn,
+            this.AwayColumn});
+            this.matchSelectLvMatches.FullRowSelect = true;
+            this.matchSelectLvMatches.HideSelection = false;
+            this.matchSelectLvMatches.Location = new System.Drawing.Point(12, 60);
+            this.matchSelectLvMatches.MultiSelect = false;
+            this.matchSelectLvMatches.Name = "matchSelectLvMatches";
+            this.matchSelectLvMatches.Size = new System.Drawing.Size(339, 154);
+            this.matchSelectLvMatches.TabIndex = 6;
+            this.matchSelectLvMatches.UseCompatibleStateImageBehavior = false;
+            this.matchSelectLvMatches.View = System.Windows.Forms.View.Details;
+            // 
+            // HomeColumn
+            // 
+            this.HomeColumn.Text = "Home";
+            this.HomeColumn.Width = 160;
+            // 
+            // AwayColumn
+            // 
+            this.AwayColumn.Text = "Away";
+            this.AwayColumn.Width = 160;
             // 
             // matchBindingSource
             // 
             this.matchBindingSource.DataSource = typeof(TicketAppWinForms.Model.Match);
-            // 
-            // btnMatchSelectOk
-            // 
-            this.btnMatchSelectOk.Location = new System.Drawing.Point(357, 60);
-            this.btnMatchSelectOk.Name = "btnMatchSelectOk";
-            this.btnMatchSelectOk.Size = new System.Drawing.Size(75, 23);
-            this.btnMatchSelectOk.TabIndex = 3;
-            this.btnMatchSelectOk.Text = "Select";
-            this.btnMatchSelectOk.UseVisualStyleBackColor = true;
-            this.btnMatchSelectOk.Click += new System.EventHandler(this.BtnMatchSelectOk_Click);
-            // 
-            // lblMatchSelectWelcome
-            // 
-            this.lblMatchSelectWelcome.AutoSize = true;
-            this.lblMatchSelectWelcome.Location = new System.Drawing.Point(12, 9);
-            this.lblMatchSelectWelcome.Name = "lblMatchSelectWelcome";
-            this.lblMatchSelectWelcome.Size = new System.Drawing.Size(86, 13);
-            this.lblMatchSelectWelcome.TabIndex = 5;
-            this.lblMatchSelectWelcome.Text = "Welcome Guest!";
             // 
             // MatchSelectWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(461, 226);
-            this.Controls.Add(this.lblMatchSelectWelcome);
-            this.Controls.Add(this.btnMatchSelectOk);
-            this.Controls.Add(this.lbMatchSelectMatches);
+            this.Controls.Add(this.matchSelectLvMatches);
+            this.Controls.Add(this.matchSelectLblWelcome);
+            this.Controls.Add(this.matchSelectBtnOk);
             this.Name = "MatchSelectWindow";
             this.Text = "MatchSelectWindow";
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).EndInit();
@@ -89,10 +103,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lbMatchSelectMatches;
-        private System.Windows.Forms.Button btnMatchSelectOk;
-        private System.Windows.Forms.Label lblMatchSelectWelcome;
+        private System.Windows.Forms.Button matchSelectBtnOk;
+        private System.Windows.Forms.Label matchSelectLblWelcome;
         private System.Windows.Forms.BindingSource matchBindingSource;
+        private System.Windows.Forms.ListView matchSelectLvMatches;
+        private System.Windows.Forms.ColumnHeader HomeColumn;
+        private System.Windows.Forms.ColumnHeader AwayColumn;
     }
 }

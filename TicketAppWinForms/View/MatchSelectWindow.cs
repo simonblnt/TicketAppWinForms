@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TicketAppWinForms.DataAccess;
 using TicketAppWinForms.Model;
@@ -19,9 +13,9 @@ namespace TicketAppWinForms.View
         public MatchSelectWindow(User user)
         {
             InitializeComponent();
-            LoadMatchesToListBox();
+            LoadMatchesToListView();
             this.user = user;
-            lblMatchSelectWelcome.Text = "Welcome " + user.LastName + " " + user.FirstName + "!";
+            matchSelectLblWelcome.Text = "Welcome " + user.LastName + " " + user.FirstName + "!";
         }
 
         private void Matches_SelectedIndexChanged(object sender, EventArgs e)
@@ -29,23 +23,28 @@ namespace TicketAppWinForms.View
 
         }
 
-        private void LoadMatchesToListBox()
+        private void LoadMatchesToListView()
         {
             List<Match> MatchesList = SqLite.QueryListOfMatches();
-
-
-            //lbMatchSelectMatches.Items.Add(String.Format("{0}\t{1}", match.TeamHome, match.TeamAway));
-            lbMatchSelectMatches.ValueMember = "Id";
-            lbMatchSelectMatches.DisplayMember = "TeamHome";
             
-            lbMatchSelectMatches.DataSource = MatchesList;
+            for (int i = 0; i < MatchesList.Count; i++)
+            {
+                var match = new ListViewItem(new[] { MatchesList[i].TeamHome, MatchesList[i].TeamAway })
+                {
+                    Text = MatchesList[i].TeamHome,
+                    Tag = MatchesList
+                };
+                matchSelectLvMatches.Items.Add(match);
+            }
         }
 
         private void BtnMatchSelectOk_Click(object sender, EventArgs e)
         {
-            if (lbMatchSelectMatches.SelectedItems.Count == 1)
+            if (matchSelectLvMatches.SelectedItems.Count == 1)
             {
-                Match match = (Match)lbMatchSelectMatches.SelectedItem;
+                var homeTeam = matchSelectLvMatches.SelectedItems[0].SubItems[0].ToString();
+                var awayTeam = matchSelectLvMatches.SelectedItems[0].SubItems[1].ToString();
+                Match match = new Match(0, homeTeam, awayTeam, 20);
                 MainWindow mainWindow = new MainWindow(match, user);
                 mainWindow.Show();
                 this.Close();
