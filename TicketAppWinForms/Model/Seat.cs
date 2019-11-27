@@ -1,40 +1,35 @@
 ﻿using System;
-using System.Windows.Forms;
 
 namespace TicketAppWinForms.Model
 {
     class Seat
     {
         public int Id { get; set; }
-        public Button SeatButton { get; set; }
-
-        private string name;
+        public string Name { get; set; }
 
         public string GetName()
         {
-            return name;
+            return Name;
         }
 
         public void SetName(int row, int column)
         {
-            name = NumberToString(row, true) + column;
+            Name = NumberToAlphabet(row, true) + column;
         }
 
-        public Seat(int id, ref Button seatButton) {
+        public Seat(int id) {
             Id = id;
-            SeatButton = seatButton;
         }
 
+        public Seat(int id, string name) {
+            Id = id;
+            this.Name = name;
+        }
 
-
-        private String NumberToString(int number, bool isCaps)
-
+        private String NumberToAlphabet(int number, bool isCaps)
         {
-
             Char c = (Char)((isCaps ? 64 : 96) + number);
-
             return c.ToString();
-
         }
     }
 }

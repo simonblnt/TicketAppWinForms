@@ -28,23 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnLoginLoadDefaultData = new System.Windows.Forms.Button();
             this.lblLoginUsername = new System.Windows.Forms.Label();
             this.lblLoginPassword = new System.Windows.Forms.Label();
             this.tbLoginUsername = new System.Windows.Forms.TextBox();
             this.tbLoginPassword = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btnLoginLoadDefaultData
-            // 
-            this.btnLoginLoadDefaultData.Location = new System.Drawing.Point(12, 12);
-            this.btnLoginLoadDefaultData.Name = "btnLoginLoadDefaultData";
-            this.btnLoginLoadDefaultData.Size = new System.Drawing.Size(75, 23);
-            this.btnLoginLoadDefaultData.TabIndex = 0;
-            this.btnLoginLoadDefaultData.Text = "Load Data";
-            this.btnLoginLoadDefaultData.UseVisualStyleBackColor = true;
-            this.btnLoginLoadDefaultData.Click += new System.EventHandler(this.BtnLoadDefaultData_Click);
             // 
             // lblLoginUsername
             // 
@@ -100,7 +89,6 @@
             this.Controls.Add(this.tbLoginUsername);
             this.Controls.Add(this.lblLoginPassword);
             this.Controls.Add(this.lblLoginUsername);
-            this.Controls.Add(this.btnLoginLoadDefaultData);
             this.Name = "LoginWindow";
             this.Text = "Login";
             this.ResumeLayout(false);
@@ -109,8 +97,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnLoginLoadDefaultData;
         private System.Windows.Forms.Label lblLoginUsername;
         private System.Windows.Forms.Label lblLoginPassword;
         private System.Windows.Forms.TextBox tbLoginUsername;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,6 @@ namespace TicketAppWinForms.View
         public LoginWindow()
         {
             InitializeComponent();
-            SqLite.Connect();
-            SqLite.ClearData();
-            SqLite.LoadDefaultData();
         }
 
         private void BtnLoadDefaultData_Click(object sender, EventArgs e)
@@ -40,9 +38,19 @@ namespace TicketAppWinForms.View
             if (SqLite.IsLoginSuccessful(username, password))
             {
                 User user = SqLite.QueryLoggedInUser(username);
-                MatchSelectWindow matchSelectWindow = new MatchSelectWindow(user);
-                this.Close();
-                matchSelectWindow.Show();
+                if (user.AccountTypeId == 3)
+                {
+                    var developerWindow = new DeveloperWindow();
+                    this.Close();
+                    developerWindow.Show();
+                }
+                else
+                {
+                    MatchSelectWindow matchSelectWindow = new MatchSelectWindow(user);
+                    this.Close();
+                    matchSelectWindow.Show();
+                }
+                
             }
             else {
                 tbLoginUsername.Clear();

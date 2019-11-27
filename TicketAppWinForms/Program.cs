@@ -23,9 +23,3 @@ namespace TicketAppWinForms
         }
     }
 }
-
-
-/*var main_form = new Form1();
-main_form.Show();
-Application.Run();
-*/

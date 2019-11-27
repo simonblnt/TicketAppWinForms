@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicketAppWinForms.Model
 {
@@ -10,7 +6,7 @@ namespace TicketAppWinForms.Model
     {
         public int Id { get; set; }
         public int MatchId { get; set; }
-        public int LocationId { get; set; }
+        public int SeatId { get; set; }
         public int TicketTypeId { get; set; }
         public bool IsSelected { get; set; }
         public DateTime DateSelected { get; set; }
