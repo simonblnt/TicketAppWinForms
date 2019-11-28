@@ -29,12 +29,12 @@ namespace TicketAppWinForms.View
             
             for (int i = 0; i < MatchesList.Count; i++)
             {
-                var match = new ListViewItem(new[] { MatchesList[i].TeamHome, MatchesList[i].TeamAway })
+                var matchListView = new ListViewItem(new[] { MatchesList[i].TeamHome, MatchesList[i].TeamAway })
                 {
                     Text = MatchesList[i].TeamHome,
                     Tag = MatchesList
                 };
-                matchSelectLvMatches.Items.Add(match);
+                matchSelectLvMatches.Items.Add(matchListView);
             }
         }
 
@@ -42,9 +42,13 @@ namespace TicketAppWinForms.View
         {
             if (matchSelectLvMatches.SelectedItems.Count == 1)
             {
-                var homeTeam = matchSelectLvMatches.SelectedItems[0].SubItems[0].ToString();
-                var awayTeam = matchSelectLvMatches.SelectedItems[0].SubItems[1].ToString();
-                Match match = new Match(0, homeTeam, awayTeam, 20);
+                string homeTeam = matchSelectLvMatches.SelectedItems[0].SubItems[0].Text.ToString();
+                string awayTeam = matchSelectLvMatches.SelectedItems[0].SubItems[1].Text.ToString();
+
+
+                int id = SqLite.QueryMatchId(homeTeam, awayTeam);
+                int income = SqLite.QueryMatchIncome(id);
+                Match match = new Match(id, homeTeam, awayTeam, income);
                 MainWindow mainWindow = new MainWindow(match, user);
                 mainWindow.Show();
                 this.Close();

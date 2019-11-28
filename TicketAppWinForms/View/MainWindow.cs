@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using TicketAppWinForms.Model;
+using System.Data;
+using System.Data.SQLite;
 
 namespace TicketAppWinForms.View
 {
@@ -11,10 +13,11 @@ namespace TicketAppWinForms.View
 
         public MainWindow(Match match, User user)
         {
-            
             this.user = user;
             this.match = match;
+            
             InitializeComponent();
+            stadiumControl1.InitStadium(match, user);
             lblMainUser.Text = "Logged in as: " + user.AccountName;
             testMatchLabel.Text = match.TeamHome + " " + match.TeamAway;
         }
@@ -28,6 +31,13 @@ namespace TicketAppWinForms.View
         {
             AboutWindow aboutWindow = new AboutWindow();
             aboutWindow.ShowDialog();
+        }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
         }
     }
 }

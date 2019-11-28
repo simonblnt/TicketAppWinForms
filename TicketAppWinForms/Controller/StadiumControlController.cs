@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using TicketAppWinForms.DataAccess;
 using TicketAppWinForms.Model;
 using TicketAppWinForms.View;
+using System.Data.SQLite;
+using System.Linq;
 
 namespace TicketAppWinForms.Controller
 {
@@ -13,6 +15,7 @@ namespace TicketAppWinForms.Controller
         #region Variables
         private StadiumControl stadiumControl;
         private Match match;
+        private User user;
         private int buttonSizeX;
         private int buttonSizeY;
 
@@ -51,19 +54,19 @@ namespace TicketAppWinForms.Controller
         private Point lowerLocation;
         private Point rightLocation;
 
-        string resourceDirectory;
-
-
         private Point pitchLocation;
         private int pitchSizeX;
         private int pitchSizeY;
         Size pitchSize;
+
+        internal List<Ticket> SelectedTickets { get; set; }
         #endregion
 
-        public StadiumControlController(StadiumControl stadiumControl, Match match)
+        public StadiumControlController(StadiumControl stadiumControl, Match match, User user)
         {
             this.match = match;
             this.stadiumControl = stadiumControl;
+            this.user = user;
             InitializeStadium();
         }
 
@@ -174,10 +177,49 @@ namespace TicketAppWinForms.Controller
                     Seat seat = new Seat(seatId);
                     seat.SetName(rowId, columnId);
                     Seats.Add(seat);
-                    SqLite.AddSeat(seat);
                     b.Text = seat.Name;
                     b.Name = b.Text;
                     b.Click += new EventHandler(this.btnEvent_click);
+
+
+                    
+
+                    if (SqLite.GetVIPSeatList().Contains(seat.Name))
+                        b.ForeColor = Color.Gold;
+
+                    if (SqLite.IsSeatAdded(seat.Name))
+                    {
+                        if (SqLite.IsTicketSelected(seat.Id, match.Id))
+                        {
+                            if (SqLite.IsTicketSelectedByUser(seat.Id, match.Id, user.Id))
+                            {
+                                b.BackColor = Color.Yellow;
+                            }
+                            else
+                            {
+                                b.BackColor = Color.Orange;
+                            }
+                        }
+                        else if (SqLite.IsTicketOwned(seat.Id, match.Id))
+                        {
+                            if (SqLite.IsTicketOwnedByUser(seat.Id, match.Id, user.Id))
+                            {
+                                b.BackColor = Color.Green;
+                            }
+                            else
+                            {
+                                b.BackColor = Color.Red;
+                            } 
+                        }
+                        else
+                        {
+                            b.BackColor = Color.White;
+                        }
+                    }
+                    else
+                    {
+                        SqLite.AddSeat(seat);
+                    }
 
                     stadiumControl.Controls.Add(b);
                     seatId++;
@@ -187,12 +229,38 @@ namespace TicketAppWinForms.Controller
             }
         }
 
-        void btnEvent_click(object sender, EventArgs e)
+        private void btnEvent_click(object sender, EventArgs e)
         {
-            ((Control)sender).BackColor = Color.Red;
             Seat seat = Seats.Find(x => x.Name == ((Control)sender).Text);
-            
-            SqLite.SelectTicket(seat.Id, match.Id);
+
+            if (SqLite.IsTicketSelectedByUser(seat.Id, match.Id, user.Id))
+            {
+                SqLite.UnselectTicket(seat.Id, match.Id);
+                ((Control)sender).BackColor = Color.White;
+            }
+            else if (SqLite.IsTicketOwnedByUser(seat.Id, match.Id, user.Id))
+            {
+                string message = "This ticket is already yours.";
+                MessageBox.Show(message);
+            }
+            else if (SqLite.IsTicketSelected(seat.Id, match.Id) || SqLite.IsTicketOwned(seat.Id, match.Id))
+            {
+                string message = "This ticket is not available.";
+                MessageBox.Show(message);
+            }
+            else
+            {
+                SqLite.SelectTicket(seat.Id, match.Id, user.Id);
+                ((Control)sender).BackColor = Color.Yellow;
+            }
+        }
+
+        public void OpenCheckoutWindow()
+        {
+            SelectedTickets = SqLite.QuerySelectedTickets(match.Id, user.Id);
+            CheckoutWindow checkoutWindow = new CheckoutWindow(match, user, SelectedTickets);
+            checkoutWindow.Show();
+            ((Form)stadiumControl.TopLevelControl).Close();
         }
     }
 }

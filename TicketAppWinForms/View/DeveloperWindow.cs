@@ -66,7 +66,9 @@ namespace TicketAppWinForms.View
 
         private void BtnDevGenerateTickets_Click(object sender, EventArgs e)
         {
+            string message = "Tickets generated";
             SqLite.GenerateTickets();
+            MessageBox.Show(message);
         }
     }
 }

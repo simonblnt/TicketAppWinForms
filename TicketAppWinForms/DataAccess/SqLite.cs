@@ -62,10 +62,8 @@ namespace TicketAppWinForms.DataAccess
 	                seatId integer,
 	                ticketTypeId integer,
 	                isSelected integer,
-	                dateSelected datetime,
 	                isOwned integer,
-	                userId integer,
-	                dateOwned datetime
+	                userId integer
                 );
 
                 CREATE TABLE seat (
@@ -125,7 +123,7 @@ namespace TicketAppWinForms.DataAccess
             }
         }
 
-        //Select
+        //Select - Queries
         public static List<Match> QueryListOfMatches() {
             List<Match> MatchList = new List<Match>();
 
@@ -189,8 +187,234 @@ namespace TicketAppWinForms.DataAccess
                     }
                 }
             }
-
             return SeatList;
+        }
+
+        public static string QuerySeatName(int seatId)
+        {
+            string sql = @"SELECT name FROM seat WHERE id = " + seatId + ";";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        string seatName = "";
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                seatName = reader.GetString(0);
+                            }
+                            return seatName;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static string QueryTicketTypeName(int ticketTypeId)
+        {
+            string sql = @"SELECT name FROM ticketType WHERE id = " + ticketTypeId + ";";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        string ticketTypeName = "";
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                ticketTypeName = reader.GetString(0);
+                            }
+                            return ticketTypeName;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static int QueryTicketPrice(int ticketTypeId)
+        {
+            string sql = @"SELECT price FROM ticketType WHERE id = " + ticketTypeId + ";";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        int ticketPrice = 0;
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                ticketPrice = reader.GetInt32(0);
+                            }
+                            return ticketPrice;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static List<Ticket> QuerySelectedTickets(int matchId, int userId)
+        {
+            List<Ticket> SelectedTickets = new List<Ticket>();
+            string sql = @"SELECT * FROM ticket WHERE matchId = " + matchId + "" +
+                                                " AND userId = " + userId + "" +
+                                                " AND isSelected = true;";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                bool isSelected, isOwned;
+                                if (reader.GetInt32(4) == 1)
+                                    isSelected = true;
+                                else
+                                    isSelected = false;
+
+                                if (reader.GetInt32(6) == 1)
+                                    isOwned = true;
+                                else
+                                    isOwned = false;
+
+                                SelectedTickets.Add(new Ticket(reader.GetInt32(0),                  //id
+                                                               reader.GetInt32(1),                  //matchId
+                                                               reader.GetInt32(2),                  //seatId
+                                                               reader.GetInt32(3),                  //ticketTypeId
+                                                               isSelected,                          //isSelected
+                                                               isOwned,                             //isOwned
+                                                               reader.GetInt32(6)));                //userId
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            return SelectedTickets;
+        }
+
+        public static int QueryMatchId(string homeTeam, string awayTeam)
+        {
+            string sql = @"SELECT id FROM match WHERE teamHome= '" + homeTeam + "' AND teamAway= '" + awayTeam + "';";
+            int id = 0;
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                id = reader.GetInt32(0);
+                            }
+                            return id;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static int QueryMatchIncome(int id)
+        {
+            string sql = @"SELECT income FROM match WHERE id= " + id + ";";
+            int income = 0;
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                income = reader.GetInt32(0);
+                            }
+                            return income;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        //Select - Booleans
+
+        public static bool IsTicketSelected(int seatId, int matchId)
+        {
+            string sql = @"SELECT id FROM ticket WHERE seatId =" + seatId + " AND matchId =" + matchId + " AND isSelected = true;";
+
+            return HasRows(sql);
+        }
+
+        public static bool IsTicketSelectedByUser(int seatId, int matchId, int userId)
+        {
+            string sql = @"SELECT id FROM ticket WHERE seatId= " + seatId + " " +
+                " AND userId= " + userId + " " + "" +
+                " AND matchId= " + matchId + " " +
+                " AND isSelected = true;";
+
+            return HasRows(sql);
+        }
+
+        public static bool IsTicketOwned(int seatId, int matchId)
+        {
+            string sql = @"SELECT id FROM ticket WHERE seatId =" + seatId + " AND matchId =" + matchId + " AND isOwned = true;";
+
+            return HasRows(sql);
+        }
+
+        public static bool IsTicketOwnedByUser(int seatId, int matchId, int userId)
+        {
+            string sql = @"SELECT id FROM ticket WHERE seatId= " + seatId + "" +
+                " AND userId= " + userId + "" +
+                " AND isOwned = true" +
+                " And matchId = " + matchId + ";";
+
+            return HasRows(sql);
+        }
+
+        public static bool IsSeatAdded(string seatName)
+        {
+            string sql = @"SELECT id FROM seat WHERE name= '" + seatName + "';";
+
+            return HasRows(sql);
         }
 
         //Insert
@@ -200,18 +424,34 @@ namespace TicketAppWinForms.DataAccess
         }
 
         //Update
-        public static void SelectTicket(int seatId, int matchId)
+        public static void SelectTicket(int seatId, int matchId, int userId)
         {
-            string sql = @"UPDATE ticket SET isSelected = 1, dateSelected = (SELECT datetime('now')) WHERE seatId = " + seatId + " AND matchId = " + matchId + ";";
-            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
-            {
-                conn.Open();
+            string sql = @"UPDATE ticket SET isSelected = 1, userId = " + userId + "" +
+                                " WHERE seatId = " + seatId + " AND matchId = " + matchId + ";";
+            ExecuteQuery(sql);
+        }
 
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                {
-                    cmd.ExecuteNonQuery();
-                }
-            }
+        public static void UnselectTicket(int seatId, int matchId)
+        {
+            string sql = @"UPDATE ticket SET isSelected = 0, userId = null
+                                  WHERE seatId = " + seatId + " AND matchId = " + matchId + ";";
+            ExecuteQuery(sql);
+        }
+
+        public static void UpdateUser(int userId, string firstName, string lastName)
+        {
+            string sql = @"UPDATE user SET firstName ='" + firstName + "', lastName ='" + lastName + "' " +
+                            "WHERE id= " + userId + ";";
+            ExecuteQuery(sql);
+        }
+
+        public static void BuyTicket(int seatId, int matchId)
+        {
+            string sql = @"UPDATE ticket SET isSelected = 0,
+                                            isOwned = true " +
+                                         " WHERE seatId = " + seatId + " " +
+                                            "AND matchId = " + matchId + ";";
+            ExecuteQuery(sql);
         }
 
         //Non-Sql
@@ -289,9 +529,27 @@ namespace TicketAppWinForms.DataAccess
                 }
             }
         }
+
+        private static bool HasRows(string sql)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                            return true;
+                        else
+                            return false;
+                    }
+                }
+            }
+        }
         
         //Non-sql
-        private static string[] GetVIPSeatList() {
+        public static string[] GetVIPSeatList() {
             string[] vipList = { "A4", "B4", "C4",
                                 "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10",
                                 "L1", "M1", "N1",

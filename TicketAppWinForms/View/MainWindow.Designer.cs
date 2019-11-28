@@ -44,8 +44,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainUser = new System.Windows.Forms.Label();
-            this.stadiumControl1 = new TicketAppWinForms.View.StadiumControl(match: match);
-            this.userTicketControl1 = new TicketAppWinForms.View.UserTicketControl();
+            this.stadiumControl1 = new TicketAppWinForms.StadiumControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,7 +65,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1348, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -92,6 +91,7 @@
             this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
             this.logOutToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.logOutToolStripMenuItem.Text = "Log Out";
+            this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -165,7 +165,7 @@
             this.lblMainUser.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblMainUser.BackColor = System.Drawing.SystemColors.Window;
             this.lblMainUser.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblMainUser.Location = new System.Drawing.Point(1221, 9);
+            this.lblMainUser.Location = new System.Drawing.Point(657, -104);
             this.lblMainUser.Name = "lblMainUser";
             this.lblMainUser.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMainUser.Size = new System.Drawing.Size(115, 13);
@@ -174,30 +174,24 @@
             // 
             // stadiumControl1
             // 
-            this.stadiumControl1.Location = new System.Drawing.Point(13, 28);
+            this.stadiumControl1.Location = new System.Drawing.Point(0, 23);
+            this.stadiumControl1.Match = null;
             this.stadiumControl1.Name = "stadiumControl1";
-            this.stadiumControl1.Size = new System.Drawing.Size(671, 447);
-            this.stadiumControl1.TabIndex = 10;
-            // 
-            // userTicketControl1
-            // 
-            this.userTicketControl1.Location = new System.Drawing.Point(690, 28);
-            this.userTicketControl1.Name = "userTicketControl1";
-            this.userTicketControl1.Size = new System.Drawing.Size(643, 647);
-            this.userTicketControl1.TabIndex = 11;
+            this.stadiumControl1.Size = new System.Drawing.Size(784, 426);
+            this.stadiumControl1.TabIndex = 11;
+            this.stadiumControl1.User = null;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1348, 687);
-            this.Controls.Add(this.userTicketControl1);
+            this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.stadiumControl1);
             this.Controls.Add(this.testMatchLabel);
             this.Controls.Add(this.lblMainUser);
             this.Controls.Add(this.menuStrip1);
-            this.MinimumSize = new System.Drawing.Size(1364, 726);
+            this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "MainWindow";
             this.Text = "MainWindow";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -226,6 +220,5 @@
         private System.Windows.Forms.Label lblMainUser;
         private System.Windows.Forms.Label testMatchLabel;
         private StadiumControl stadiumControl1;
-        private UserTicketControl userTicketControl1;
     }
 }
