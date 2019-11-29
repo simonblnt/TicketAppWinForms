@@ -59,7 +59,7 @@
             this.Controls.Add(this.BtnStadiumCheckout);
             this.Location = new System.Drawing.Point(0, 23);
             this.Name = "StadiumControl";
-            this.Size = new System.Drawing.Size(784, 426);
+            this.Size = new System.Drawing.Size(786, 426);
             this.ResumeLayout(false);
 
         }

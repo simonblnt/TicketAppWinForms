@@ -75,8 +75,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\AdminControlController.cs" />
     <Compile Include="Controller\StadiumControlController.cs" />
     <Compile Include="DataAccess\SqLite.cs" />
+    <Compile Include="View\AdminControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\AdminControl.Designer.cs">
+      <DependentUpon>AdminControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\CheckoutWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +143,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\AdminControl.resx">
+      <DependentUpon>AdminControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\CheckoutWindow.resx">
       <DependentUpon>CheckoutWindow.cs</DependentUpon>
     </EmbeddedResource>

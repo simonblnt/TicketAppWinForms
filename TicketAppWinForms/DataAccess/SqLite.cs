@@ -168,6 +168,62 @@ namespace TicketAppWinForms.DataAccess
             return user;
         }
 
+        public static string QueryUserName(int userId)
+        {
+            string sql = @"SELECT accountName FROM user WHERE id = " + userId + ";";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        string userName = "";
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                userName = reader.GetString(0);
+                            }
+                            return userName;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static string QueryUserFullName(int userId)
+        {
+            string sql = @"SELECT firstName, lastName FROM user WHERE id = " + userId + ";";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        string fullName = "";
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                fullName = reader.GetString(0) + " " + reader.GetString(1);
+                            }
+                            return fullName;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
+
         public static List<Seat> QuerySeats() {
             List<Seat> SeatList = new List<Seat>();
 
@@ -188,6 +244,32 @@ namespace TicketAppWinForms.DataAccess
                 }
             }
             return SeatList;
+        }
+
+        public static List<TicketType> QueryTicketTypes()
+        {
+            List<TicketType> TicketTypes = new List<TicketType>();
+
+            string sql = @"SELECT * FROM ticketType;";
+
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            TicketTypes.Add(new TicketType(reader.GetInt32(0),
+                                                            reader.GetString(1),
+                                                            reader.GetInt32(2)));
+                        }
+                    }
+                }
+            }
+
+            return TicketTypes;
         }
 
         public static string QuerySeatName(int seatId)
@@ -246,6 +328,29 @@ namespace TicketAppWinForms.DataAccess
             }
         }
 
+        public static int QueryNumberOfTicketsByType(int matchId, int ticketTypeId)
+        {
+            int count = 0;
+
+            string sql = @"SELECT id FROM ticket WHERE matchId= " + matchId +" AND ticketTypeId= " + ticketTypeId + " AND isOwned = true;";
+
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+
         public static int QueryTicketPrice(int ticketTypeId)
         {
             string sql = @"SELECT price FROM ticketType WHERE id = " + ticketTypeId + ";";
@@ -264,6 +369,34 @@ namespace TicketAppWinForms.DataAccess
                                 ticketPrice = reader.GetInt32(0);
                             }
                             return ticketPrice;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static int QueryTicketOwnerId(int ticketId)
+        {
+            string sql = @"SELECT userId FROM ticket WHERE id = " + ticketId + ";";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        int ownerId = 0;
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                ownerId = reader.GetInt32(0);
+                            }
+                            return ownerId;
                         }
                         else
                         {
@@ -316,6 +449,48 @@ namespace TicketAppWinForms.DataAccess
                 }
             }
             return SelectedTickets;
+        }
+
+        public static List<Ticket> QueryOwnedTickets(int matchId)
+        {
+            List<Ticket> OwnedTickets = new List<Ticket>();
+            string sql = @"SELECT * FROM ticket WHERE isOwned = true AND matchId = " + matchId + ";";
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                bool isSelected, isOwned;
+                                if (reader.GetInt32(4) == 1)
+                                    isSelected = true;
+                                else
+                                    isSelected = false;
+
+                                if (reader.GetInt32(6) == 1)
+                                    isOwned = true;
+                                else
+                                    isOwned = false;
+
+                                OwnedTickets.Add(new Ticket(reader.GetInt32(0),                  //id
+                                                               reader.GetInt32(1),                  //matchId
+                                                               reader.GetInt32(2),                  //seatId
+                                                               reader.GetInt32(3),                  //ticketTypeId
+                                                               isSelected,                          //isSelected
+                                                               isOwned,                             //isOwned
+                                                               reader.GetInt32(6)));                //userId
+                            }
+                        }
+
+                    }
+                }
+            }
+            return OwnedTickets;
         }
 
         public static int QueryMatchId(string homeTeam, string awayTeam)
@@ -374,7 +549,46 @@ namespace TicketAppWinForms.DataAccess
             }
         }
 
+
+
+        public static int CalculateMatchIncome(int matchId)
+        {
+            List<int> TicketTypeId = new List<int>();
+            int matchIncome = 0;
+            string sql = @"SELECT ticketTypeId FROM ticket WHERE matchId= " + matchId + " AND isOwned=1 ;";
+
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                TicketTypeId.Add(reader.GetInt32(0));
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var ticketTypeId in TicketTypeId)
+            {
+                matchIncome += QueryTicketPrice(ticketTypeId);
+            }
+
+            return matchIncome;
+        }
+
         //Select - Booleans
+        public static bool IsAdmin(int userId)
+        {
+            string sql = @"SELECT id FROM user WHERE id= " + userId + " AND accountTypeId = 1;";
+            return HasRows(sql);
+        }
 
         public static bool IsTicketSelected(int seatId, int matchId)
         {
@@ -451,6 +665,12 @@ namespace TicketAppWinForms.DataAccess
                                             isOwned = true " +
                                          " WHERE seatId = " + seatId + " " +
                                             "AND matchId = " + matchId + ";";
+            ExecuteQuery(sql);
+        }
+
+        public static void IncreaseIncome(int amount, int matchId)
+        {
+            string sql = @"UPDATE match SET income = income + " + amount + " WHERE id = " + matchId + ";";
             ExecuteQuery(sql);
         }
 

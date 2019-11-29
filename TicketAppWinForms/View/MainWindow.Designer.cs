@@ -45,6 +45,7 @@
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainUser = new System.Windows.Forms.Label();
             this.stadiumControl1 = new TicketAppWinForms.StadiumControl();
+            this.adminControl1 = new TicketAppWinForms.View.AdminControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +66,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1317, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -165,7 +166,7 @@
             this.lblMainUser.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lblMainUser.BackColor = System.Drawing.SystemColors.Window;
             this.lblMainUser.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblMainUser.Location = new System.Drawing.Point(657, -104);
+            this.lblMainUser.Location = new System.Drawing.Point(720, 9);
             this.lblMainUser.Name = "lblMainUser";
             this.lblMainUser.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblMainUser.Size = new System.Drawing.Size(115, 13);
@@ -181,12 +182,20 @@
             this.stadiumControl1.TabIndex = 11;
             this.stadiumControl1.User = null;
             // 
+            // adminControl1
+            // 
+            this.adminControl1.Location = new System.Drawing.Point(837, 23);
+            this.adminControl1.Name = "adminControl1";
+            this.adminControl1.Size = new System.Drawing.Size(252, 460);
+            this.adminControl1.TabIndex = 12;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(1317, 729);
+            this.Controls.Add(this.adminControl1);
             this.Controls.Add(this.stadiumControl1);
             this.Controls.Add(this.testMatchLabel);
             this.Controls.Add(this.lblMainUser);
@@ -220,5 +229,6 @@
         private System.Windows.Forms.Label lblMainUser;
         private System.Windows.Forms.Label testMatchLabel;
         private StadiumControl stadiumControl1;
+        private AdminControl adminControl1;
     }
 }

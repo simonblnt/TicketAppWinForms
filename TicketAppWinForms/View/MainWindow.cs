@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using TicketAppWinForms.Model;
 using System.Data;
 using System.Data.SQLite;
+using TicketAppWinForms.DataAccess;
 
 namespace TicketAppWinForms.View
 {
@@ -17,7 +18,20 @@ namespace TicketAppWinForms.View
             this.match = match;
             
             InitializeComponent();
+
+            if (SqLite.IsAdmin(user.Id))
+            {
+                adminControl1.InitAdmin(match);
+            }
+            else
+            {
+                adminControl1.Hide();
+            }
+
             stadiumControl1.InitStadium(match, user);
+
+            
+
             lblMainUser.Text = "Logged in as: " + user.AccountName;
             testMatchLabel.Text = match.TeamHome + " " + match.TeamAway;
         }
