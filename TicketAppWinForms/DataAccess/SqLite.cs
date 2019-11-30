@@ -674,6 +674,13 @@ namespace TicketAppWinForms.DataAccess
             ExecuteQuery(sql);
         }
 
+        public static void ClearSelection(int userId, int matchId)
+        {
+            string sql = @"UPDATE ticket SET isSelected = 0, userId = null
+                                  WHERE userId = " + userId + " AND matchId = " + matchId + " AND isSelected = 1;";
+            ExecuteQuery(sql);
+        }
+
         //Non-Sql
         public static void GenerateTickets() {
             List<Seat> SeatList = QuerySeats();

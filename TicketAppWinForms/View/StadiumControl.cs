@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using TicketAppWinForms.Controller;
 using TicketAppWinForms.Model;
 using TicketAppWinForms.View;
+using TicketAppWinForms.DataAccess;
 
 namespace TicketAppWinForms
 {

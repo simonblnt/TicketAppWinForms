@@ -70,5 +70,10 @@ namespace TicketAppWinForms.View
                 LvAdminTicketsByType.Items.Add(ticketListView);
             }
         }
+
+        private void AdminControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

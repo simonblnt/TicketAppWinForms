@@ -18,6 +18,7 @@ namespace TicketAppWinForms.Controller
         private User user;
         private int buttonSizeX;
         private int buttonSizeY;
+        private float buttonFontSize;
 
         private int upperMaxRows;
         private int upperMaxColumns;
@@ -108,6 +109,8 @@ namespace TicketAppWinForms.Controller
             buttonSizeX = 35;
             buttonSizeY = 35;
 
+            buttonFontSize = 8.25f;
+
             upperMaxRows = 4;
             upperMaxColumns = 10;
             lowerMaxRows = 4;
@@ -177,12 +180,10 @@ namespace TicketAppWinForms.Controller
                     Seat seat = new Seat(seatId);
                     seat.SetName(rowId, columnId);
                     Seats.Add(seat);
+                    b.Font = new Font(b.Font.FontFamily, buttonFontSize);
                     b.Text = seat.Name;
                     b.Name = b.Text;
                     b.Click += new EventHandler(this.btnEvent_click);
-
-
-                    
 
                     if (SqLite.GetVIPSeatList().Contains(seat.Name))
                         b.ForeColor = Color.Gold;

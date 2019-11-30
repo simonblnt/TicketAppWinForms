@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.LvAdminTicketsAll = new System.Windows.Forms.ListView();
+            this.Seat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.User = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Price = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LblAdminIncome = new System.Windows.Forms.Label();
             this.TextAdminIncome = new System.Windows.Forms.Label();
             this.LvAdminTicketsByType = new System.Windows.Forms.ListView();
-            this.User = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Seat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Price = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Income = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
@@ -48,16 +48,30 @@
             this.LvAdminTicketsAll.HideSelection = false;
             this.LvAdminTicketsAll.Location = new System.Drawing.Point(4, 4);
             this.LvAdminTicketsAll.Name = "LvAdminTicketsAll";
-            this.LvAdminTicketsAll.Size = new System.Drawing.Size(239, 306);
+            this.LvAdminTicketsAll.Size = new System.Drawing.Size(239, 160);
             this.LvAdminTicketsAll.TabIndex = 0;
             this.LvAdminTicketsAll.UseCompatibleStateImageBehavior = false;
             this.LvAdminTicketsAll.View = System.Windows.Forms.View.Details;
+            // 
+            // Seat
+            // 
+            this.Seat.Text = "Seat";
+            // 
+            // User
+            // 
+            this.User.Text = "User";
+            this.User.Width = 74;
+            // 
+            // Price
+            // 
+            this.Price.Text = "Price";
+            this.Price.Width = 81;
             // 
             // LblAdminIncome
             // 
             this.LblAdminIncome.AutoSize = true;
             this.LblAdminIncome.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LblAdminIncome.Location = new System.Drawing.Point(3, 425);
+            this.LblAdminIncome.Location = new System.Drawing.Point(3, 270);
             this.LblAdminIncome.Name = "LblAdminIncome";
             this.LblAdminIncome.Size = new System.Drawing.Size(154, 26);
             this.LblAdminIncome.TabIndex = 1;
@@ -67,7 +81,7 @@
             // 
             this.TextAdminIncome.AutoSize = true;
             this.TextAdminIncome.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.TextAdminIncome.Location = new System.Drawing.Point(163, 425);
+            this.TextAdminIncome.Location = new System.Drawing.Point(163, 270);
             this.TextAdminIncome.Name = "TextAdminIncome";
             this.TextAdminIncome.Size = new System.Drawing.Size(0, 26);
             this.TextAdminIncome.TabIndex = 2;
@@ -78,26 +92,12 @@
             this.Type,
             this.Income});
             this.LvAdminTicketsByType.HideSelection = false;
-            this.LvAdminTicketsByType.Location = new System.Drawing.Point(4, 316);
+            this.LvAdminTicketsByType.Location = new System.Drawing.Point(4, 170);
             this.LvAdminTicketsByType.Name = "LvAdminTicketsByType";
             this.LvAdminTicketsByType.Size = new System.Drawing.Size(239, 97);
             this.LvAdminTicketsByType.TabIndex = 3;
             this.LvAdminTicketsByType.UseCompatibleStateImageBehavior = false;
             this.LvAdminTicketsByType.View = System.Windows.Forms.View.Details;
-            // 
-            // User
-            // 
-            this.User.Text = "User";
-            this.User.Width = 74;
-            // 
-            // Seat
-            // 
-            this.Seat.Text = "Seat";
-            // 
-            // Price
-            // 
-            this.Price.Text = "Price";
-            this.Price.Width = 81;
             // 
             // Type
             // 
@@ -118,7 +118,8 @@
             this.Controls.Add(this.LblAdminIncome);
             this.Controls.Add(this.LvAdminTicketsAll);
             this.Name = "AdminControl";
-            this.Size = new System.Drawing.Size(252, 460);
+            this.Size = new System.Drawing.Size(352, 328);
+            this.Load += new System.EventHandler(this.AdminControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
