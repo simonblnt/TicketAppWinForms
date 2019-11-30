@@ -123,11 +123,11 @@ namespace TicketAppWinForms.Controller
             rowId = 1;
             columnId = 1;
 
-            leftStartingLocationX = (stadiumControl.Location.X + 10);    //Left border
-            leftStartingLocationY = upperMaxRows * (buttonSizeX + 3);
+            leftStartingLocationX = (stadiumControl.Location.X);    //Left border
+            leftStartingLocationY = upperMaxRows * (buttonSizeX);
 
-            upperStartingLocationX = leftMaxColumns * (buttonSizeY + 3);
-            upperStartingLocationY = (stadiumControl.Location.Y + 10);
+            upperStartingLocationX = leftMaxColumns * (buttonSizeY);
+            upperStartingLocationY = leftStartingLocationY - (upperMaxRows * (buttonSizeX));
 
             lowerStartingLocationX = upperStartingLocationX;
             lowerStartingLocationY = leftStartingLocationY + leftMaxRows * (buttonSizeY);

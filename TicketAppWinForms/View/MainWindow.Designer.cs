@@ -44,8 +44,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.lblMainUser = new System.Windows.Forms.Label();
-            this.stadiumControl1 = new TicketAppWinForms.StadiumControl();
             this.adminControl1 = new TicketAppWinForms.View.AdminControl();
+            this.stadiumControl1 = new TicketAppWinForms.StadiumControl();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -173,6 +173,13 @@
             this.lblMainUser.TabIndex = 9;
             this.lblMainUser.Text = "Guest";
             // 
+            // adminControl1
+            // 
+            this.adminControl1.Location = new System.Drawing.Point(837, 23);
+            this.adminControl1.Name = "adminControl1";
+            this.adminControl1.Size = new System.Drawing.Size(252, 460);
+            this.adminControl1.TabIndex = 12;
+            // 
             // stadiumControl1
             // 
             this.stadiumControl1.Location = new System.Drawing.Point(0, 23);
@@ -182,18 +189,12 @@
             this.stadiumControl1.TabIndex = 11;
             this.stadiumControl1.User = null;
             // 
-            // adminControl1
-            // 
-            this.adminControl1.Location = new System.Drawing.Point(837, 23);
-            this.adminControl1.Name = "adminControl1";
-            this.adminControl1.Size = new System.Drawing.Size(252, 460);
-            this.adminControl1.TabIndex = 12;
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(1317, 729);
             this.Controls.Add(this.adminControl1);
             this.Controls.Add(this.stadiumControl1);
