@@ -119,7 +119,7 @@ namespace TicketAppWinForms.Controller
             rightMaxColumns = 4;
 
             Seats = new List<Seat>();
-            seatId = 0;
+            seatId = 1;
             rowId = 1;
             columnId = 1;
 
@@ -154,10 +154,10 @@ namespace TicketAppWinForms.Controller
 
         private void InitializeStand(Point standLocation, int standStartingLocationX, int standMaxRows, int standMaxColumns)
         {
-            for (int i = 0; i < standMaxRows; i++)
+            for (int i = 1; i <= standMaxRows; i++)
             {
                 columnId = 1;
-                for (int j = 0; j < standMaxColumns; j++)
+                for (int j = 1; j <= standMaxColumns; j++)
                 {
                     Button b = new Button
                     {
@@ -165,7 +165,7 @@ namespace TicketAppWinForms.Controller
                         Location = standLocation,
                     };
 
-                    if (j == standMaxColumns - 1)
+                    if (j == standMaxColumns)
                     {
                         standLocation.X = standStartingLocationX;
                         standLocation.Y += b.Height;
